@@ -12,7 +12,8 @@
 
 @property (strong, nonatomic) UIBAlertView *strongAlertReference;
 
-@property (strong, nonatomic) AlertDismissedHandler activeDismissHandler;
+@property (copy) AlertDismissedHandler activeDismissHandler;
+
 @property (strong, nonatomic) NSString *activeTitle;
 @property (strong, nonatomic) NSString *activeMessage;
 @property (strong, nonatomic) NSString *activeCancelTitle;
@@ -56,7 +57,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (self.activeDismissHandler) {
-        self.activeDismissHandler(buttonIndex,buttonIndex==0);
+        self.activeDismissHandler(buttonIndex,buttonIndex == 0);
     }
     self.strongAlertReference = nil;
 }
