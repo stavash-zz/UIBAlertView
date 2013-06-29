@@ -30,23 +30,11 @@
 #pragma mark - IBActions
 
 - (IBAction)activateAlert:(id)sender {
-    UIBAlertView *alert = [[UIBAlertView alloc] initWithTitle:@"Alert" message:@"Testing" cancelButtonTitle:@"Cancel" otherButtonTitles:@"Button 1",@"Button 2",nil];
-    [alert showWithDismissHandler:^(NSInteger selectedIndex, BOOL didCancel) {
-        if (didCancel) {
-            NSLog(@"User cancelled");
-            return;
-        }
-        switch (selectedIndex) {
-            case 1:
-                NSLog(@"1 selected");
-                break;
-            case 2:
-                NSLog(@"2 selected");
-                break;
-            default:
-                break;
-        }
-    }];
+    UIBAlertView *alert = [[UIBAlertView alloc] initWithTitle:@"Alert" message:@"Testing" cancelButtonTitle:@"Cancel" otherButtonTitles:@"Default",@"Button 2",nil];
+    [alert showWithDefaultHandler:^() { NSLog(@"Default button pressed"); }
+                     canceHandler:^() { NSLog(@"Cancel button pressed"); }
+                     otherHandler:^(NSInteger selectedIndex) { NSLog(@"Index button: %d", selectedIndex); }
+     ];
 }
 
 @end
