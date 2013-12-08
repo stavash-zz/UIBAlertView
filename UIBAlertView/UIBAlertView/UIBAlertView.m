@@ -29,6 +29,7 @@
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,... {
     self = [super init];
     if (self) {
+		self.alertViewStyle = UIAlertViewStyleDefault;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:self cancelButtonTitle:aCancelTitle otherButtonTitles:nil];
         if (otherTitles != nil) {
             [alert addButtonWithTitle:otherTitles];
@@ -51,6 +52,19 @@
     self.activeDismissHandler = handler;
     self.strongAlertReference = self;
     [self.activeAlert show];
+}
+
+#pragma mark UIAlertView passthroughs
+
+- (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
+{
+	_alertViewStyle = alertViewStyle;
+	self.activeAlert.alertViewStyle = alertViewStyle;
+}
+
+- (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex
+{
+	return [self.activeAlert textFieldAtIndex:textFieldIndex];
 }
 
 #pragma mark - UIAlertViewDelegate

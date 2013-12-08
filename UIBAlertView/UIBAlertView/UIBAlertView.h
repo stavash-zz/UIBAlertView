@@ -12,6 +12,11 @@ typedef void (^AlertDismissedHandler) (NSInteger selectedIndex, BOOL didCancel);
 
 @interface UIBAlertView : NSObject
 
+// UIAlertView passthroughs
+@property(nonatomic,assign) UIAlertViewStyle alertViewStyle NS_AVAILABLE_IOS(5_0);
+- (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex NS_AVAILABLE_IOS(5_0);
+
+// UIBAlertView functionality
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,...NS_REQUIRES_NIL_TERMINATION;
 - (void)showWithDismissHandler:(AlertDismissedHandler)handler;
 
