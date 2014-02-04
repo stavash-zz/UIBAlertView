@@ -12,7 +12,9 @@
 
 @property (strong, nonatomic) UIBAlertView *strongAlertReference;
 
-@property (copy) AlertDismissedHandler activeDismissHandler;
+@property (copy) AlertDefaultButtonHandler defaultHandler;
+@property (copy) AlertCancelButtonHandler cancelHandler;
+@property (copy) AlertOtherButtonHandler otherHandler;
 
 @property (strong, nonatomic) NSString *activeTitle;
 @property (strong, nonatomic) NSString *activeMessage;
@@ -25,7 +27,6 @@
 @implementation UIBAlertView
 
 #pragma mark - Public (Initialization)
-
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,... {
     self = [super init];
     if (self) {
@@ -41,17 +42,21 @@
             }
             va_end(args);
         }
-        self.activeAlert = alert;
+        _activeAlert = alert;
     }
     return self;
 }
 
 #pragma mark - Public (Functionality)
-
-- (void)showWithDismissHandler:(AlertDismissedHandler)handler {
-    self.activeDismissHandler = handler;
-    self.strongAlertReference = self;
-    [self.activeAlert show];
+- (void)showWithDefaultHandler:(AlertDefaultButtonHandler)defaultHandler
+                  canceHandler:(AlertCancelButtonHandler)cancelHandler
+                  otherHandler:(AlertOtherButtonHandler)otherHandler {
+    _defaultHandler = defaultHandler;
+    _cancelHandler = cancelHandler;
+    _otherHandler = otherHandler;
+    
+    _strongAlertReference = self;
+    [_activeAlert show];
 }
 
 #pragma mark UIAlertView passthroughs
@@ -70,10 +75,10 @@
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (self.activeDismissHandler) {
-        self.activeDismissHandler(buttonIndex,buttonIndex == alertView.cancelButtonIndex);
-    }
-    self.strongAlertReference = nil;
+    if (buttonIndex == 0 && _cancelHandler) _cancelHandler();
+    if (buttonIndex == 1 && _defaultHandler) _defaultHandler();
+    if (buttonIndex > 1 && _otherHandler) _otherHandler(buttonIndex);
+    _strongAlertReference = nil;
 }
 
 @end
