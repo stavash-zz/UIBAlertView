@@ -71,7 +71,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (self.activeDismissHandler) {
-        self.activeDismissHandler(buttonIndex,buttonIndex == alertView.cancelButtonIndex);
+        self.activeDismissHandler(buttonIndex, [alertView buttonTitleAtIndex:buttonIndex], buttonIndex == alertView.cancelButtonIndex);
     }
     self.strongAlertReference = nil;
 }

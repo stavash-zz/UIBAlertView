@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^AlertDismissedHandler) (NSInteger selectedIndex, BOOL didCancel);
+typedef void (^AlertDismissedHandler) (NSInteger selectedIndex, NSString *selectedTitle, BOOL didCancel);
 
 @interface UIBAlertView : NSObject
 
