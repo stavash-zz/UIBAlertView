@@ -25,7 +25,6 @@
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,... {
     self = [super init];
     if (self) {
-		self.alertViewStyle = UIAlertViewStyleDefault;
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:self cancelButtonTitle:aCancelTitle otherButtonTitles:nil];
         if (otherTitles != nil) {
             [alert addButtonWithTitle:otherTitles];
@@ -52,9 +51,13 @@
 
 #pragma mark UIAlertView passthroughs
 
+- (UIAlertViewStyle)alertViewStyle
+{
+    return self.activeAlert.alertViewStyle;
+}
+
 - (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
 {
-	_alertViewStyle = alertViewStyle;
 	self.activeAlert.alertViewStyle = alertViewStyle;
 }
 
