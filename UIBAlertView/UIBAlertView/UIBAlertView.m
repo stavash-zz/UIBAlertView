@@ -25,9 +25,8 @@
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,... {
     self = [super init];
     if (self) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:self cancelButtonTitle:aCancelTitle otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:self cancelButtonTitle:aCancelTitle otherButtonTitles:otherTitles, nil];
         if (otherTitles != nil) {
-            [alert addButtonWithTitle:otherTitles];
             va_list args;
             va_start(args, otherTitles);
             NSString * title = nil;
@@ -73,6 +72,14 @@
         self.activeDismissHandler(buttonIndex, [alertView buttonTitleAtIndex:buttonIndex], buttonIndex == alertView.cancelButtonIndex);
     }
     self.strongAlertReference = nil;
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView
+{
+    if (self.shouldEnableFirstOtherButtonHandler)
+        return self.shouldEnableFirstOtherButtonHandler();
+
+    return YES;
 }
 
 @end

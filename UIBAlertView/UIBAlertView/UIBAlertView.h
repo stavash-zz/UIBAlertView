@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class UIBAlertView;
+
 typedef void (^UIBAlertDismissedHandler) (NSInteger selectedIndex, NSString *selectedTitle, BOOL didCancel);
+typedef BOOL (^UIBAlertShouldEnableFirstOtherButtonHandler)();
 
 @interface UIBAlertView : NSObject
+
+@property (copy, nonatomic) UIBAlertShouldEnableFirstOtherButtonHandler shouldEnableFirstOtherButtonHandler;
 
 // UIAlertView passthroughs
 @property(nonatomic,assign) UIAlertViewStyle alertViewStyle NS_AVAILABLE_IOS(5_0);
