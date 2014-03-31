@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) UIBAlertView *strongAlertReference;
 
-@property (copy) AlertDismissedHandler activeDismissHandler;
+@property (copy, nonatomic) UIBAlertDismissedHandler activeDismissHandler;
 
 @property (strong, nonatomic) UIAlertView *activeAlert;
 
@@ -43,7 +43,7 @@
 
 #pragma mark - Public (Functionality)
 
-- (void)showWithDismissHandler:(AlertDismissedHandler)handler {
+- (void)showWithDismissHandler:(UIBAlertDismissedHandler)handler {
     self.activeDismissHandler = handler;
     self.strongAlertReference = self;
     [self.activeAlert show];

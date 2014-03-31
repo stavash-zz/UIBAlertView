@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^AlertDismissedHandler) (NSInteger selectedIndex, NSString *selectedTitle, BOOL didCancel);
+typedef void (^UIBAlertDismissedHandler) (NSInteger selectedIndex, NSString *selectedTitle, BOOL didCancel);
 
 @interface UIBAlertView : NSObject
 
@@ -18,6 +18,6 @@ typedef void (^AlertDismissedHandler) (NSInteger selectedIndex, NSString *select
 
 // UIBAlertView functionality
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,...NS_REQUIRES_NIL_TERMINATION;
-- (void)showWithDismissHandler:(AlertDismissedHandler)handler;
+- (void)showWithDismissHandler:(UIBAlertDismissedHandler)handler;
 
 @end
