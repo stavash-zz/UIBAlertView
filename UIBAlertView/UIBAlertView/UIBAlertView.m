@@ -14,10 +14,6 @@
 
 @property (copy) AlertDismissedHandler activeDismissHandler;
 
-@property (strong, nonatomic) NSString *activeTitle;
-@property (strong, nonatomic) NSString *activeMessage;
-@property (strong, nonatomic) NSString *activeCancelTitle;
-@property (strong, nonatomic) NSString *activeOtherTitles;
 @property (strong, nonatomic) UIAlertView *activeAlert;
 
 @end
