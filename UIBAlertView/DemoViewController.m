@@ -31,17 +31,17 @@
 
 - (IBAction)activateAlert:(id)sender {
     UIBAlertView *alert = [[UIBAlertView alloc] initWithTitle:@"Alert" message:@"Testing" cancelButtonTitle:@"Cancel" otherButtonTitles:@"Button 1",@"Button 2",nil];
-    [alert showWithDismissHandler:^(NSInteger selectedIndex, BOOL didCancel) {
+    [alert showWithDismissHandler:^(NSInteger selectedIndex, NSString *selectedTitle, BOOL didCancel) {
         if (didCancel) {
             NSLog(@"User cancelled");
             return;
         }
         switch (selectedIndex) {
             case 1:
-                NSLog(@"1 selected");
+                NSLog(@"%@ selected", selectedTitle);
                 break;
             case 2:
-                NSLog(@"2 selected");
+                NSLog(@"%@ selected", selectedTitle);
                 break;
             default:
                 break;
