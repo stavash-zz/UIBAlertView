@@ -12,12 +12,8 @@
 
 @property (strong, nonatomic) UIBAlertView *strongAlertReference;
 
-@property (copy) AlertDismissedHandler activeDismissHandler;
+@property (copy, nonatomic) UIBAlertDismissedHandler activeDismissHandler;
 
-@property (strong, nonatomic) NSString *activeTitle;
-@property (strong, nonatomic) NSString *activeMessage;
-@property (strong, nonatomic) NSString *activeCancelTitle;
-@property (strong, nonatomic) NSString *activeOtherTitles;
 @property (strong, nonatomic) UIAlertView *activeAlert;
 
 @end
@@ -29,10 +25,8 @@
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,... {
     self = [super init];
     if (self) {
-		self.alertViewStyle = UIAlertViewStyleDefault;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:self cancelButtonTitle:aCancelTitle otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:aTitle message:aMessage delegate:self cancelButtonTitle:aCancelTitle otherButtonTitles:otherTitles, nil];
         if (otherTitles != nil) {
-            [alert addButtonWithTitle:otherTitles];
             va_list args;
             va_start(args, otherTitles);
             NSString * title = nil;
@@ -48,7 +42,7 @@
 
 #pragma mark - Public (Functionality)
 
-- (void)showWithDismissHandler:(AlertDismissedHandler)handler {
+- (void)showWithDismissHandler:(UIBAlertDismissedHandler)handler {
     self.activeDismissHandler = handler;
     self.strongAlertReference = self;
     [self.activeAlert show];
@@ -56,9 +50,13 @@
 
 #pragma mark UIAlertView passthroughs
 
+- (UIAlertViewStyle)alertViewStyle
+{
+    return self.activeAlert.alertViewStyle;
+}
+
 - (void)setAlertViewStyle:(UIAlertViewStyle)alertViewStyle
 {
-	_alertViewStyle = alertViewStyle;
 	self.activeAlert.alertViewStyle = alertViewStyle;
 }
 
@@ -71,9 +69,17 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (self.activeDismissHandler) {
-        self.activeDismissHandler(buttonIndex,buttonIndex == alertView.cancelButtonIndex);
+        self.activeDismissHandler(buttonIndex, [alertView buttonTitleAtIndex:buttonIndex], buttonIndex == alertView.cancelButtonIndex);
     }
     self.strongAlertReference = nil;
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView
+{
+    if (self.shouldEnableFirstOtherButtonHandler)
+        return self.shouldEnableFirstOtherButtonHandler();
+
+    return YES;
 }
 
 @end

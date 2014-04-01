@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^AlertDismissedHandler) (NSInteger selectedIndex, BOOL didCancel);
+@class UIBAlertView;
+
+typedef void (^UIBAlertDismissedHandler) (NSInteger selectedIndex, NSString *selectedTitle, BOOL didCancel);
+typedef BOOL (^UIBAlertShouldEnableFirstOtherButtonHandler)();
 
 @interface UIBAlertView : NSObject
+
+@property (copy, nonatomic) UIBAlertShouldEnableFirstOtherButtonHandler shouldEnableFirstOtherButtonHandler;
 
 // UIAlertView passthroughs
 @property(nonatomic,assign) UIAlertViewStyle alertViewStyle NS_AVAILABLE_IOS(5_0);
@@ -18,6 +23,6 @@ typedef void (^AlertDismissedHandler) (NSInteger selectedIndex, BOOL didCancel);
 
 // UIBAlertView functionality
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,...NS_REQUIRES_NIL_TERMINATION;
-- (void)showWithDismissHandler:(AlertDismissedHandler)handler;
+- (void)showWithDismissHandler:(UIBAlertDismissedHandler)handler;
 
 @end
