@@ -20,6 +20,7 @@ typedef BOOL (^UIBAlertShouldEnableFirstOtherButtonHandler)();
 // UIAlertView passthroughs
 @property(nonatomic,assign) UIAlertViewStyle alertViewStyle NS_AVAILABLE_IOS(5_0);
 - (UITextField *)textFieldAtIndex:(NSInteger)textFieldIndex NS_AVAILABLE_IOS(5_0);
+@property (strong, nonatomic, readonly) UIAlertView *activeAlert;
 
 // UIBAlertView functionality
 - (id)initWithTitle:(NSString *)aTitle message:(NSString *)aMessage cancelButtonTitle:(NSString *)aCancelTitle otherButtonTitles:(NSString *)otherTitles,...NS_REQUIRES_NIL_TERMINATION;
